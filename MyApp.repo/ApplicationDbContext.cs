@@ -7,6 +7,7 @@ namespace MyApp.repo
     public abstract class ApplicationDbContext: DbContext
     {
         protected readonly IConfigurationRoot Configuration;
+
         public DbSet<Customer> Customers { get; set; }
 
         protected ApplicationDbContext(DbContextOptions options, IConfigurationRoot config): base(options)
