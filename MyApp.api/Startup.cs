@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MyApp.repo;
 using MyApp.repo.mysql;
 using MyApp.repo.sqlite;
 
@@ -31,11 +32,14 @@ namespace MyApp.api
             if (Configuration["Data:database"] == "mysql")
             {
                 services.AddDbContext<MySqlApplicationDbContext>(ServiceLifetime.Scoped);
+                services.AddScoped<ApplicationDbContext, MySqlApplicationDbContext>();
             }
             else
             {
                 services.AddDbContext<SqliteApplicationDbContext>(ServiceLifetime.Scoped);
+                services.AddScoped<ApplicationDbContext, SqliteApplicationDbContext>();
             }
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Add framework services.
             services.AddMvc();
